@@ -1,14 +1,16 @@
+
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GameArena</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
 </head>
 <body>
 
-    <header class="site-header">
+    <header class="site-header">    
         <nav class="main-nav" aria-label="Navigation principale">
             <a href="index.php" class="site-brand" aria-label="Retour à l'accueil GameArena">
                 <img

@@ -1,123 +1,118 @@
-<?php include 'includes/header.php'; ?>
+<?php
+require_once 'includes/db.php';
+
+$stmt = $pdo->query("SELECT * FROM tournaments");
+$tournaments = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+$nb_tournois = count($tournaments);
+$total_places = array_sum(array_column($tournaments, 'places'));
+
+include 'includes/header.php';
+?>
+
+<div class="header-transition"></div>
 
 <main class="home-main">
+
     <section class="home-intro" aria-labelledby="home-intro-title">
-        <p class="intro-tag">Tournoi e-sport</p>
-        <h2 id="home-intro-title" class="intro-title">Les jeux</h2>
-        <p class="intro-text">
-            Découvre les jeux disponibles sur GameArena, accède aux espaces de tournoi,
-            consulte les formats de compétition et prépare-toi à entrer dans l’arène.
-        </p>
+        <div class="intro-left">
+            <p class="intro-tag">Tournoi e-sport</p>
+            <h2 id="home-intro-title" class="intro-title">Les <span class="intro-title-accent">Jeux</span></h2>
+            <p class="intro-text">
+                Découvre les jeux disponibles sur GameArena, accède aux espaces de tournoi,
+                consulte les formats de compétition et prépare-toi à entrer dans l'arène.
+            </p>
+        </div>
     </section>
 
     <section class="games-showcase" aria-labelledby="games-title">
         <header class="section-head">
-            <p class="section-tag">Sélection principale</p>
-            <h2 id="games-title" class="section-title">Jeux du tournoi</h2>
+            <div class="section-head-left">
+                <p class="section-tag">Sélection principale</p>
+                <h2 id="games-title" class="section-title">Jeux du tournoi</h2>
+            </div>
+            <div class="section-live" aria-label="Tournois en cours">
+                <span class="live-dot" aria-hidden="true"></span>
+                En cours
+            </div>
         </header>
 
         <ul class="games-list">
-            <li class="games-item">
-                <article class="game-card">
-                    <figure class="game-media">
-                        <img src="assets/img/cs2.webp" alt="Counter-Strike 2" class="game-image">
-                    </figure>
-                    <header class="game-card-header">
-                        <p class="game-category">FPS</p>
-                        <h3 class="game-title">Counter-Strike 2</h3>
-                    </header>
-                    <p class="game-description">
-                        Un tournoi tactique intense où la précision, la communication et la stratégie
-                        font toute la différence.
-                    </p>
-                    <a href="cs2.php" class="game-link">Voir le tournoi</a>
-                </article>
-            </li>
+            <?php foreach ($tournaments as $tournament):
+                $places_total = (int) $tournament['places'];
+                $places_prises = isset($tournament['places_prises']) ? (int) $tournament['places_prises'] : 0;
+                $pct = $places_total > 0 ? round(($places_prises / $places_total) * 100) : 0;
 
-            <li class="games-item">
-                <article class="game-card">
-                    <figure class="game-media">
-                        <img src="assets/img/fc25.webp" alt="EA Sports FC 25" class="game-image">
-                    </figure>
-                    <header class="game-card-header">
-                        <p class="game-category">Sport</p>
-                        <h3 class="game-title">EA Sports FC 25</h3>
-                    </header>
-                    <p class="game-description">
-                        Entre dans la compétition et affronte les meilleurs joueurs dans des matchs
-                        rapides, techniques et spectaculaires.
-                    </p>
-                    <a href="fc25.php" class="game-link">Voir le tournoi</a>
-                </article>
-            </li>
+                if ($pct >= 90) {
+                    $bar_class = 'full';
+                } elseif ($pct >= 60) {
+                    $bar_class = 'warn';
+                } else {
+                    $bar_class = '';
+                }
 
-            <li class="games-item">
-                <article class="game-card">
-                    <figure class="game-media">
-                        <img src="assets/img/lol_cover.webp" alt="League of Legends" class="game-image">
-                    </figure>
-                    <header class="game-card-header">
-                        <p class="game-category">MOBA</p>
-                        <h3 class="game-title">League of Legends</h3>
-                    </header>
-                    <p class="game-description">
-                        Forme ton équipe, prépare ta stratégie et vise la victoire dans une arène
-                        où chaque décision compte.
-                    </p>
-                    <a href="lol.php" class="game-link">Voir le tournoi</a>
-                </article>
-            </li>
+                $title = trim($tournament['title']);
+                $game_link = '#';
 
-            <li class="games-item">
-                <article class="game-card">
-                    <figure class="game-media">
-                        <img src="assets/img/mario_kart.webp" alt="Mario Kart" class="game-image">
-                    </figure>
-                    <header class="game-card-header">
-                        <p class="game-category">Course</p>
-                        <h3 class="game-title">Mario Kart</h3>
-                    </header>
-                    <p class="game-description">
-                        Défie tes adversaires dans des courses dynamiques, pleines de vitesse,
-                        d’objets surprises et de rebondissements.
-                    </p>
-                    <a href="mario_kart.php" class="game-link">Voir le tournoi</a>
-                </article>
-            </li>
+                if (stripos($title, 'LoL') === 0) {
+                    $game_link = 'jeux/Lol.php';
+                } elseif (stripos($title, 'Mario Kart') === 0) {
+                    $game_link = 'jeux/Mariokart.php';
+                } elseif (stripos($title, 'CS2') === 0) {
+                    $game_link = 'jeux/CS2.php';
+                } elseif (stripos($title, 'Smash Bros') === 0) {
+                    $game_link = 'jeux/Smachbros.php';
+                } elseif (stripos($title, 'FC 25') === 0) {
+                    $game_link = 'jeux/FC25.php';
+                } elseif (stripos($title, 'Rocket League') === 0) {
+                    $game_link = 'jeux/RocketLeague.php';
+                }
+            ?>
+                <li class="games-item">
+                    <article class="game-card">
 
-            <li class="games-item">
-                <article class="game-card">
-                    <figure class="game-media">
-                        <img src="assets/img/rocket_league.webp" alt="Rocket League" class="game-image">
-                    </figure>
-                    <header class="game-card-header">
-                        <p class="game-category">Arcade</p>
-                        <h3 class="game-title">Rocket League</h3>
-                    </header>
-                    <p class="game-description">
-                        Vitesse, précision et esprit d’équipe dans un tournoi explosif entre football
-                        et véhicules survitaminés.
-                    </p>
-                    <a href="rocket_league.php" class="game-link">Voir le tournoi</a>
-                </article>
-            </li>
+                        <figure class="game-media">
+                            <img
+                                src="<?= htmlspecialchars($tournament['image']) ?>"
+                                alt="<?= htmlspecialchars($tournament['title']) ?>"
+                                class="game-image"
+                            >
+                        </figure>
 
-            <li class="games-item">
-                <article class="game-card">
-                    <figure class="game-media">
-                        <img src="assets/img/ssbu.webp" alt="Super Smash Bros Ultimate" class="game-image">
-                    </figure>
-                    <header class="game-card-header">
-                        <p class="game-category">Combat</p>
-                        <h3 class="game-title">Super Smash Bros Ultimate</h3>
-                    </header>
-                    <p class="game-description">
-                        Entre dans l’arène et montre ta maîtrise dans des affrontements nerveux,
-                        techniques et imprévisibles.
-                    </p>
-                    <a href="ssbu.php" class="game-link">Voir le tournoi</a>
-                </article>
-            </li>
+                        <span class="game-date-badge" aria-label="Date du tournoi">
+                            <?= htmlspecialchars($tournament['date']) ?>
+                        </span>
+
+                        <header class="game-card-header">
+                            <p class="game-category">Tournoi</p>
+                            <h3 class="game-title"><?= htmlspecialchars($tournament['title']) ?></h3>
+                        </header>
+
+                        <p class="game-description">
+                            <?= $places_total ?> places disponibles
+                        </p>
+
+                        <div class="game-card-sep"></div>
+
+                        <div class="game-card-footer">
+                            <a href="<?= htmlspecialchars($game_link) ?>" class="game-link">
+                                Voir le tournoi →
+                            </a>
+
+                            <div class="game-progress" aria-label="Places restantes">
+                                <div class="game-progress-bar">
+                                    <div class="game-progress-fill <?= htmlspecialchars($bar_class) ?>" style="width: <?= $pct ?>%"></div>
+                                </div>
+                                <span class="game-progress-txt"><?= $places_total ?> pl.</span>
+                            </div>
+                        </div>
+
+                    </article>
+                </li>
+            <?php endforeach; ?>
         </ul>
     </section>
+
 </main>
+
+<?php require_once 'includes/footer.php'; ?>    
