@@ -16,24 +16,22 @@ include 'includes/header.php';
 
     <section class="home-intro" aria-labelledby="home-intro-title">
         <div class="intro-left">
-            <p class="intro-tag">Tournoi e-sport</p>
-            <h2 id="home-intro-title" class="intro-title">Les <span class="intro-title-accent">Jeux</span></h2>
-            <p class="intro-text">
+            <p class="intro-tag" data-i18n="introTag">Tournoi e-sport</p>
+            <h2 id="home-intro-title" class="intro-title">
+                <span data-i18n="introTitle">Les Jeux</span>
+            </h2>
+            <p class="intro-text" data-i18n="introText">
                 Découvre les jeux disponibles sur GameArena, accède aux espaces de tournoi,
                 consulte les formats de compétition et prépare-toi à entrer dans l'arène.
             </p>
         </div>
     </section>
 
-    <section class="games-showcase" aria-labelledby="games-title">
+    <section class="games-showcase" id="jeux" aria-labelledby="games-title">
         <header class="section-head">
             <div class="section-head-left">
-                <p class="section-tag">Sélection principale</p>
-                <h2 id="games-title" class="section-title">Jeux du tournoi</h2>
-            </div>
-            <div class="section-live" aria-label="Tournois en cours">
-                <span class="live-dot" aria-hidden="true"></span>
-                En cours
+                <p class="section-tag" data-i18n="sectionTitle">Sélection principale</p>
+                <h2 id="games-title" class="section-title" data-i18n="sectionTag">Jeux du tournoi</h2>
             </div>
         </header>
 
@@ -53,19 +51,26 @@ include 'includes/header.php';
 
                 $title = trim($tournament['title']);
                 $game_link = '#';
+                $title_i18n = '';
 
                 if (stripos($title, 'LoL') === 0) {
                     $game_link = 'jeux/Lol.php';
+                    $title_i18n = 'game1Title';
                 } elseif (stripos($title, 'Mario Kart') === 0) {
                     $game_link = 'jeux/Mariokart.php';
+                    $title_i18n = 'game2Title';
                 } elseif (stripos($title, 'CS2') === 0) {
                     $game_link = 'jeux/CS2.php';
+                    $title_i18n = 'game6Title';
                 } elseif (stripos($title, 'Smash Bros') === 0) {
                     $game_link = 'jeux/Smachbros.php';
+                    $title_i18n = 'game3Title';
                 } elseif (stripos($title, 'FC 25') === 0) {
                     $game_link = 'jeux/FC25.php';
+                    $title_i18n = 'game4Title';
                 } elseif (stripos($title, 'Rocket League') === 0) {
                     $game_link = 'jeux/RocketLeague.php';
+                    $title_i18n = 'game5Title';
                 }
             ?>
                 <li class="games-item">
@@ -84,19 +89,29 @@ include 'includes/header.php';
                         </span>
 
                         <header class="game-card-header">
-                            <p class="game-category">Tournoi</p>
-                            <h3 class="game-title"><?= htmlspecialchars($tournament['title']) ?></h3>
+                            <p class="game-category" data-i18n="gameCategory">Tournoi</p>
+
+                            <?php if ($title_i18n !== ''): ?>
+                                <h3 class="game-title" data-i18n="<?= htmlspecialchars($title_i18n) ?>">
+                                    <?= htmlspecialchars($tournament['title']) ?>
+                                </h3>
+                            <?php else: ?>
+                                <h3 class="game-title">
+                                    <?= htmlspecialchars($tournament['title']) ?>
+                                </h3>
+                            <?php endif; ?>
                         </header>
 
                         <p class="game-description">
-                            <?= $places_total ?> places disponibles
+                            <span class="game-places-number"><?= $places_total ?></span>
+                            <span data-i18n="gameSlots">places disponibles</span>
                         </p>
 
                         <div class="game-card-sep"></div>
 
                         <div class="game-card-footer">
-                            <a href="<?= htmlspecialchars($game_link) ?>" class="game-link">
-                                Voir le tournoi →
+                            <a href="<?= htmlspecialchars($game_link) ?>" class="game-link" data-i18n="gameLink">
+                                Voir le tournoi
                             </a>
 
                             <div class="game-progress" aria-label="Places restantes">
@@ -115,4 +130,4 @@ include 'includes/header.php';
 
 </main>
 
-<?php require_once 'includes/footer.php'; ?>    
+<?php require_once 'includes/footer.php'; ?>
