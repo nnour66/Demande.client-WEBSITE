@@ -959,64 +959,6 @@ body[data-theme="dark"] .theme-icon-moon {
     }
 }
 
-/* ===== MESSAGE ERREUR / SUCCESS ===== */
-
-.form-message {
-    position: relative;
-    margin-bottom: 20px;
-    padding: 14px 16px;
-    border-radius: 12px;
-    font-size: 0.9rem;
-    font-weight: 600;
-    text-align: center;
-    backdrop-filter: blur(6px);
-    border: 1px solid transparent;
-    animation: fadeIn 0.4s ease;
-}
-
-/* 🔴 ERREUR */
-.form-message.error {
-    background: rgba(255, 77, 77, 0.12);
-    color: #ff4d4d;
-    border-color: rgba(255, 77, 77, 0.4);
-    box-shadow: 0 0 12px rgba(255, 77, 77, 0.25);
-}
-
-/* 🟢 SUCCESS */
-.form-message.success {
-    background: rgba(16, 163, 127, 0.12);
-    color: var(--accent);
-    border-color: rgba(16, 163, 127, 0.4);
-    box-shadow: 0 0 12px rgba(16, 163, 127, 0.25);
-}
-
-/* ✨ Animation */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(-8px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.user-name {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 54px;
-    padding: 0 16px;
-    border-radius: 999px;
-    color: var(--text-main);
-    background: var(--white-soft);
-    backdrop-filter: blur(8px);
-    border: 1px solid var(--border);
-    font-size: 0.9rem;
-    font-weight: 700;
-}
-
 
 /* ===== MESSAGE FORMULAIRE MODERNE ===== */
 

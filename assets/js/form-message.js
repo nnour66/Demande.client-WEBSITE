@@ -1,12 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const form = document.getElementById("loginForm");
-    const messageContainer = document.getElementById("loginMessageContainer");
-    const submitBtn = document.getElementById("loginSubmitBtn");
 
-    if (!form || !messageContainer || !submitBtn) return;
-
-    function renderMessage(message, type = "error") {
-        messageContainer.innerHTML = `
+    /* ===== UTILITAIRE COMMUN ===== */
+    function renderMessage(container, message, type = "error") {
+        container.innerHTML = `
             <div class="form-message ${type}">
                 <span class="form-message-icon">${type === "success" ? "✓" : "!"}</span>
                 <span class="form-message-text">${message}</span>
@@ -14,61 +10,110 @@ document.addEventListener("DOMContentLoaded", () => {
             </div>
         `;
 
-        const closeBtn = messageContainer.querySelector(".form-message-close");
-        const messageBox = messageContainer.querySelector(".form-message");
+        const closeBtn   = container.querySelector(".form-message-close");
+        const messageBox = container.querySelector(".form-message");
 
         if (closeBtn && messageBox) {
             closeBtn.addEventListener("click", () => {
                 messageBox.classList.add("is-hiding");
-                setTimeout(() => {
-                    messageContainer.innerHTML = "";
-                }, 300);
+                setTimeout(() => { container.innerHTML = ""; }, 300);
             });
         }
     }
 
-    form.addEventListener("submit", async (e) => {
-        e.preventDefault();
+    /* ===== LOGIN ===== */
+    const loginForm      = document.getElementById("loginForm");
+    const loginContainer = document.getElementById("loginMessageContainer");
+    const loginBtn       = document.getElementById("loginSubmitBtn");
 
-        messageContainer.innerHTML = "";
+    if (loginForm && loginContainer && loginBtn) {
+        loginForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            loginContainer.innerHTML = "";
 
-        const email = form.email.value.trim();
-        const password = form.password.value;
+            const email    = loginForm.email.value.trim();
+            const password = loginForm.password.value;
 
-        if (!email || !password) {
-            renderMessage("Veuillez remplir tous les champs.", "error");
-            return;
-        }
-
-        submitBtn.disabled = true;
-        submitBtn.textContent = "Connexion...";
-
-        try {
-            const formData = new FormData(form);
-
-            const response = await fetch("login.php", {
-                method: "POST",
-                body: formData,
-                cache: "no-store",
-                headers: {
-                    "X-Requested-With": "XMLHttpRequest"
-                }
-            });
-
-            const data = await response.json();
-
-            renderMessage(data.message, data.status);
-
-            if (data.status === "success" && data.redirect) {
-                setTimeout(() => {
-                    window.location.href = data.redirect;
-                }, 1200);
+            if (!email || !password) {
+                renderMessage(loginContainer, "Veuillez remplir tous les champs.", "error");
+                return;
             }
-        } catch (error) {
-            renderMessage("Une erreur est survenue. Réessayez.", "error");
-        } finally {
-            submitBtn.disabled = false;
-            submitBtn.textContent = "Se connecter";
-        }
-    });
+
+            loginBtn.disabled    = true;
+            loginBtn.textContent = "Connexion...";
+
+            try {
+                const response = await fetch("login.php", {
+                    method: "POST",
+                    body: new FormData(loginForm),
+                    cache: "no-store",
+                    headers: { "X-Requested-With": "XMLHttpRequest" }
+                });
+
+                const data = await response.json();
+                renderMessage(loginContainer, data.message, data.status);
+
+                if (data.status === "success" && data.redirect) {
+                    setTimeout(() => { window.location.href = data.redirect; }, 1200);
+                }
+            } catch {
+                renderMessage(loginContainer, "Une erreur est survenue. Réessayez.", "error");
+            } finally {
+                loginBtn.disabled    = false;
+                loginBtn.textContent = "Se connecter";
+            }
+        });
+    }
+
+    /* ===== REGISTER ===== */
+    const registerForm      = document.getElementById("registerForm");
+    const registerContainer = document.getElementById("registerMessageContainer");
+    const registerBtn       = document.getElementById("registerSubmitBtn");
+
+    if (registerForm && registerContainer && registerBtn) {
+        registerForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            registerContainer.innerHTML = "";
+
+            const username        = registerForm.username.value.trim();
+            const email           = registerForm.email.value.trim();
+            const password        = registerForm.password.value;
+            const confirmPassword = registerForm.confirm_password.value;
+
+            if (!username || !email || !password || !confirmPassword) {
+                renderMessage(registerContainer, "Veuillez remplir tous les champs.", "error");
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                renderMessage(registerContainer, "Les mots de passe ne correspondent pas.", "error");
+                return;
+            }
+
+            registerBtn.disabled    = true;
+            registerBtn.textContent = "Création...";
+
+            try {
+                const response = await fetch("register.php", {
+                    method: "POST",
+                    body: new FormData(registerForm),
+                    cache: "no-store",
+                    headers: { "X-Requested-With": "XMLHttpRequest" }
+                });
+
+                const data = await response.json();
+                renderMessage(registerContainer, data.message, data.status);
+
+                if (data.status === "success" && data.redirect) {
+                    setTimeout(() => { window.location.href = data.redirect; }, 1200);
+                }
+            } catch {
+                renderMessage(registerContainer, "Une erreur est survenue. Réessayez.", "error");
+            } finally {
+                registerBtn.disabled    = false;
+                registerBtn.textContent = "Créer mon compte";
+            }
+        });
+    }
+
 });
