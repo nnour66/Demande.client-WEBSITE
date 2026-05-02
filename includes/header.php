@@ -19,7 +19,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
     <header class="site-header">
         <nav class="main-nav" aria-label="Navigation principale">
-            <a href="index.php" class="site-brand" aria-label="Retour à l'accueil GameArena">
+            <a href="/index.php" class="site-brand" aria-label="Retour à l'accueil GameArena">
                 <img
                     src="/assets/img/logo-tournoi.svg"
                     alt="Logo GameArena"
