@@ -1,6 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-    /* ===== UTILITAIRE COMMUN ===== */
+    /* =====================================================
+       UTILITAIRE COMMUN
+    ===================================================== */
     function renderMessage(container, message, type = "error") {
         container.innerHTML = `
             <div class="form-message ${type}">
@@ -21,7 +23,34 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    /* ===== LOGIN ===== */
+
+    /* =====================================================
+       TOGGLE AFFICHER / MASQUER MOT DE PASSE
+    ===================================================== */
+    document.querySelectorAll(".password-toggle").forEach((btn) => {
+        btn.addEventListener("click", () => {
+            const input   = document.getElementById(btn.dataset.target);
+            const eyeShow = btn.querySelector(".eye-show");
+            const eyeHide = btn.querySelector(".eye-hide");
+
+            if (input.type === "password") {
+                input.type            = "text";
+                eyeShow.style.display = "none";
+                eyeHide.style.display = "block";
+                btn.setAttribute("aria-label", "Masquer le mot de passe");
+            } else {
+                input.type            = "password";
+                eyeShow.style.display = "block";
+                eyeHide.style.display = "none";
+                btn.setAttribute("aria-label", "Afficher le mot de passe");
+            }
+        });
+    });
+
+
+    /* =====================================================
+       LOGIN
+    ===================================================== */
     const loginForm      = document.getElementById("loginForm");
     const loginContainer = document.getElementById("loginMessageContainer");
     const loginBtn       = document.getElementById("loginSubmitBtn");
@@ -65,11 +94,61 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    /* ===== REGISTER ===== */
+
+    /* =====================================================
+       REGISTER
+    ===================================================== */
     const registerForm      = document.getElementById("registerForm");
     const registerContainer = document.getElementById("registerMessageContainer");
     const registerBtn       = document.getElementById("registerSubmitBtn");
+    const passwordInput     = document.getElementById("password");
+    const zxcvbnScoreInput  = document.getElementById("zxcvbn_score");
+    const passwordCriteria  = document.getElementById("passwordCriteria");
 
+    const criteriaLength  = document.getElementById("criteria-length");
+    const criteriaUpper   = document.getElementById("criteria-upper");
+    const criteriaNumber  = document.getElementById("criteria-number");
+    const criteriaSpecial = document.getElementById("criteria-special");
+    const criteriaScore   = document.getElementById("criteria-score");
+
+    /* ── Critères en temps réel ── */
+    if (passwordInput && passwordCriteria && zxcvbnScoreInput) {
+        passwordInput.addEventListener("input", () => {
+            const val = passwordInput.value;
+
+            if (!val) {
+                passwordCriteria.style.display = "none";
+                zxcvbnScoreInput.value         = "0";
+                return;
+            }
+
+            passwordCriteria.style.display = "flex";
+
+            const hasLength  = val.length >= 8;
+            const hasUpper   = /[A-Z]/.test(val);
+            const hasNumber  = /[0-9]/.test(val);
+            const hasSpecial = /[^A-Za-z0-9]/.test(val);
+
+            const result   = zxcvbn(val);
+            const score    = result.score;
+            const hasScore = score >= 3;
+
+            zxcvbnScoreInput.value = score;
+
+            function update(el, valid, okText, koText) {
+                el.textContent = valid ? `✓ ${okText}` : `✗ ${koText}`;
+                el.classList.toggle("valid", valid);
+            }
+
+            update(criteriaLength,  hasLength,  "Au moins 8 caractères",    "Au moins 8 caractères");
+            update(criteriaUpper,   hasUpper,   "Une majuscule",             "Une majuscule");
+            update(criteriaNumber,  hasNumber,  "Un chiffre",                "Un chiffre");
+            update(criteriaSpecial, hasSpecial, "Un caractère spécial",      "Un caractère spécial");
+            update(criteriaScore,   hasScore,   `Score zxcvbn : ${score}/4`, `Score zxcvbn : ${score}/4 (minimum 3)`);
+        });
+    }
+
+    /* ── Soumission ── */
     if (registerForm && registerContainer && registerBtn) {
         registerForm.addEventListener("submit", async (e) => {
             e.preventDefault();
@@ -79,9 +158,20 @@ document.addEventListener("DOMContentLoaded", () => {
             const email           = registerForm.email.value.trim();
             const password        = registerForm.password.value;
             const confirmPassword = registerForm.confirm_password.value;
+            const score           = parseInt(zxcvbnScoreInput.value, 10);
 
             if (!username || !email || !password || !confirmPassword) {
                 renderMessage(registerContainer, "Veuillez remplir tous les champs.", "error");
+                return;
+            }
+
+            if (email.length > 100) {
+                renderMessage(registerContainer, "L'adresse email ne peut pas dépasser 100 caractères.", "error");
+                return;
+            }
+
+            if (score < 3) {
+                renderMessage(registerContainer, "Mot de passe trop faible. Score minimum requis : 3/4.", "error");
                 return;
             }
 

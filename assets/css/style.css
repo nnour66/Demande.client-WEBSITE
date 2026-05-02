@@ -1283,3 +1283,60 @@ body[data-theme="dark"] .theme-icon-moon {
         right: -10px;
     }
 }
+
+/* ===== CRITÈRES MOT DE PASSE ===== */
+.password-criteria {
+    list-style: none;
+    margin-top: 10px;
+    margin-bottom: 14px;
+    display: none;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.criteria-item {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #ff4d4d;
+    transition: color 0.25s ease;
+}
+
+.criteria-item.valid {
+    color: #10a37f;
+}
+
+/* ===== TOGGLE MOT DE PASSE ===== */
+.input-password-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-password-wrap input {
+    width: 100%;
+    padding-right: 46px;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-muted);
+    padding: 0;
+    transition: color 0.2s ease;
+}
+
+.password-toggle:hover {
+    color: var(--text-main);
+}
+
+.eye-icon {
+    width: 20px;
+    height: 20px;
+    display: block;
+}
