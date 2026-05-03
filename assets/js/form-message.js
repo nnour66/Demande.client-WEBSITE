@@ -47,9 +47,8 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-
     /* =====================================================
-       LOGIN
+                            LOGIN
     ===================================================== */
     const loginForm      = document.getElementById("loginForm");
     const loginContainer = document.getElementById("loginMessageContainer");
@@ -60,10 +59,10 @@ document.addEventListener("DOMContentLoaded", () => {
             e.preventDefault();
             loginContainer.innerHTML = "";
 
-            const email    = loginForm.email.value.trim();
-            const password = loginForm.password.value;
+            const identifier = loginForm.identifier.value.trim();
+            const password   = loginForm.password.value;
 
-            if (!email || !password) {
+            if (!identifier || !password) {
                 renderMessage(loginContainer, "Veuillez remplir tous les champs.", "error");
                 return;
             }
@@ -94,6 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    
 
     /* =====================================================
        REGISTER

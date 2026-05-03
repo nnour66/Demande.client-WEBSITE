@@ -296,15 +296,16 @@ body[data-theme="dark"] .theme-icon-moon {
 
 .hero-title {
     font-family: Georgia, "Times New Roman", serif;
-    font-size: clamp(4rem, 12vw, 10rem);
+    font-size: clamp(3rem, 8vw, 7rem); 
     line-height: 0.92;
     letter-spacing: 1px;
     color: var(--text-main);
     text-shadow: 0 8px 30px rgba(0, 0, 0, 0.18);
     max-width: 1000px;
     margin: 0 auto;
+    width: 100%; /* S'assure que la boîte prend toute la largeur dispo */
+    text-align: center; /* Centre le texte dans la boîte */
 }
-
 /* ===== DÉCOR HEADER ===== */
 .site-header::before,
 .site-header::after {
@@ -343,15 +344,46 @@ body[data-theme="dark"] .theme-icon-moon {
         height: 50px;
     }
 
+    /* 1. On nettoie complètement le conteneur parent */
     .hero-banner {
-        padding-top: 80px;
+        margin-top: 60px !important; /* Ajuste ce chiffre pour le titre du haut */
+    } 
+    .home-intro, 
+    .intro-left {
+        width: 100% !important;
+        margin: 0 !important;
+        
+        /* On remet le padding à 0 sur les côtés pour annuler le décalage, 
+           mais on garde un tout petit peu (15px) pour que ça ne touche pas les bords de l'écran */
+        padding-left: 15px !important; 
+        padding-right: 15px !important;
+        box-sizing: border-box !important; /* Hyper important : empêche le padding d'agrandir la boîte */
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
     }
 
+    /* 2. On s'assure que le texte n'a plus de décalage propre à lui-même */
+    .hero-title ,
+    .intro-title,
+    .intro-tag {
+        text-align: center !important;
+        margin-left: 0 !important; 
+        margin-right: 0 !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important; /* Désactive les max-width qui pourraient bloquer le centrage */
+    }
+    
     .hero-text {
         font-size: 1rem;
         max-width: 520px;
+        text-align: center !important;
+        margin: 15px auto 0 auto !important; /* Centre horizontalement et ajoute de l'espace au-dessus */
     }
 }
+
 
 @media (max-width: 600px) {
     .main-nav {
@@ -1561,4 +1593,372 @@ body[data-theme="dark"] .theme-icon-moon {
     .tournament-hero {
         padding: 40px 20px;
     }
+}
+
+/* ===== PAGE ÉQUIPE ===== */
+.team-section {
+    display: flex;
+    align-items: flex-start;
+    gap: 32px;
+    margin-top: 40px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.team-divider {
+    width: 1px;
+    background: var(--border);
+    align-self: stretch;
+    min-height: 200px;
+}
+
+.team-form-title {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--text-main);
+    margin-bottom: 6px;
+}
+
+.team-form-subtitle {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+.team-message {
+    width: 100%;
+    padding: 14px 16px;
+    border-radius: 14px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 24px;
+    border: 1px solid transparent;
+}
+
+.team-message.success {
+    background: linear-gradient(135deg, rgba(16, 163, 127, 0.18), rgba(16, 163, 127, 0.08));
+    border-color: rgba(16, 163, 127, 0.35);
+    color: var(--accent);
+}
+
+.team-message.error {
+    background: linear-gradient(135deg, rgba(255, 77, 77, 0.18), rgba(255, 77, 77, 0.08));
+    border-color: rgba(255, 77, 77, 0.35);
+    color: #ff6b6b;
+}
+
+.invite-code-display {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 6px 14px;
+    border-radius: 8px;
+    background: rgba(255, 215, 0, 0.12);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    color: #ffd700;
+    font-size: 1.3rem;
+    font-weight: 900;
+    letter-spacing: 3px;
+}
+
+/* select cohérent avec les inputs */
+.login-field select {
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--bg-surface-2);
+    color: var(--text-main);
+    font-size: 0.95rem;
+    transition: border 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' fill='none' stroke='%238e8ea0' stroke-width='2' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 18px;
+    padding-right: 38px;
+}
+
+.login-field select:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(16, 163, 127, 0.15);
+}
+
+.btn-outline {
+    background: transparent;
+    border: 2px solid var(--border);
+    color: var(--text-main);
+}
+
+.btn-outline:hover {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+    box-shadow: none;
+    color: var(--text-main);
+}
+
+/* ===== RESPONSIVE ÉQUIPE ===== */
+@media (max-width: 768px) {
+    .team-divider {
+        display: none;
+    }
+
+    .team-section {
+        gap: 24px;
+    }
+}
+
+/* ===== PAGE PROFIL ===== */
+.profile-card-section {
+    margin-bottom: 48px;
+}
+
+.profile-card {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 28px 32px;
+    border-radius: 18px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    flex-wrap: wrap;
+}
+
+.profile-card-avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #ffffff;
+    font-size: 1.6rem;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.profile-card-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.profile-card-name {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--text-main);
+    margin-bottom: 4px;
+}
+
+.profile-card-email {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.profile-card-edit {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 20px;
+    border-radius: 999px;
+    background: var(--white-soft);
+    border: 1px solid var(--border);
+    color: var(--text-main);
+    text-decoration: none;
+    font-size: 0.88rem;
+    font-weight: 700;
+    transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.profile-card-edit:hover {
+    background: var(--white-soft-hover);
+    border-color: var(--accent);
+    transform: translateY(-2px);
+}
+
+/* ===== TOURNOIS PROFIL ===== */
+.profile-section-title {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--text-main);
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+}
+
+.profile-tournaments-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.profile-tournament-card {
+    padding: 22px 24px;
+    border-radius: 16px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: border-color 0.25s ease, transform 0.25s ease;
+}
+
+.profile-tournament-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-3px);
+}
+
+.profile-tournament-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.profile-tournament-badge {
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 3px 10px;
+    border-radius: 999px;
+}
+
+.profile-tournament-badge.solo {
+    background: rgba(16, 163, 127, 0.15);
+    color: var(--accent);
+    border: 1px solid rgba(16, 163, 127, 0.3);
+}
+
+.profile-tournament-badge.team {
+    background: rgba(99, 102, 241, 0.15);
+    color: #818cf8;
+    border: 1px solid rgba(99, 102, 241, 0.3);
+}
+
+.profile-tournament-date {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+}
+
+.profile-tournament-title {
+    font-size: 1rem;
+    font-weight: 800;
+    color: var(--text-main);
+    line-height: 1.3;
+}
+
+.profile-tournament-team {
+    font-size: 0.88rem;
+    color: var(--text-soft);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.profile-captain-badge {
+    font-size: 0.65rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: rgba(255, 200, 0, 0.15);
+    color: #ffd700;
+    border: 1px solid rgba(255, 200, 0, 0.3);
+}
+
+.profile-invite-code {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+}
+
+.profile-invite-code span {
+    font-weight: 900;
+    letter-spacing: 2px;
+    color: #ffd700;
+}
+
+.profile-tournament-status {
+    font-size: 0.82rem;
+    color: var(--accent);
+    font-weight: 700;
+}
+
+.profile-unregister-form {
+    margin-top: auto;
+}
+
+.profile-unregister-btn {
+    width: 100%;
+    padding: 9px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 77, 77, 0.3);
+    background: rgba(255, 77, 77, 0.08);
+    color: #ff6b6b;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.profile-unregister-btn:hover {
+    background: rgba(255, 77, 77, 0.18);
+    border-color: rgba(255, 77, 77, 0.5);
+}
+
+.profile-empty {
+    text-align: center;
+    padding: 48px 20px;
+    color: var(--text-muted);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+/* ===== EDIT PROFIL ===== */
+.label-optional {
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: var(--text-muted);
+}
+
+/* ===== RESPONSIVE PROFIL ===== */
+@media (max-width: 900px) {
+    .profile-tournaments-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .profile-card {
+        padding: 20px;
+    }
+
+    .profile-tournaments-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* =========================================
+   CARTES DE TOURNOIS CLIQUABLES (INDEX)
+   ========================================= */
+
+.tournament-card-link {
+    text-decoration: none; /* Supprime le soulignement bleu des liens */
+    color: inherit; /* Garde la couleur originale du texte de la carte */
+    display: block; /* Permet au lien d'englober toute la zone */
+    transition: transform 0.25s ease-in-out; /* Animation fluide */
+}
+
+/* Effet de survol (la carte se soulève légèrement) */
+.tournament-card-link:hover {
+    transform: translateY(-5px); 
+}
+
+/* Assure-toi que l'ancien bouton "Voir le tournoi" garde l'apparence d'un bouton cliquable */
+.tournament-card-link .game-link {
+    cursor: pointer; 
 }

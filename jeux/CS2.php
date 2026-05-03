@@ -83,28 +83,24 @@ include '../includes/header.php';
         <div class="tournament-section-inner">
             <h2 class="tournament-section-title">Prizes & Récompenses</h2>
             <div class="prizes-grid">
-
                 <div class="prize-card prize-card--gold">
                     <span class="prize-place">1er</span>
                     <span class="prize-trophy">🥇</span>
                     <span class="prize-reward">500 €</span>
                     <span class="prize-label">+ Trophée GameArena</span>
                 </div>
-
                 <div class="prize-card prize-card--silver">
                     <span class="prize-place">2ème</span>
                     <span class="prize-trophy">🥈</span>
                     <span class="prize-reward">200 €</span>
                     <span class="prize-label">+ Médaille GameArena</span>
                 </div>
-
                 <div class="prize-card prize-card--bronze">
                     <span class="prize-place">3ème</span>
                     <span class="prize-trophy">🥉</span>
                     <span class="prize-reward">100 €</span>
                     <span class="prize-label">+ Médaille GameArena</span>
                 </div>
-
             </div>
         </div>
     </section>
@@ -114,7 +110,13 @@ include '../includes/header.php';
         <div class="tournament-section-inner">
             <h2 class="tournament-cta-title">Prêt à participer ?</h2>
             <p class="tournament-cta-text">Inscrivez-vous dès maintenant et affrontez les meilleurs joueurs.</p>
-            <a href="../register.php" class="tournament-cta-btn">S'inscrire au tournoi</a>
+
+            <?php if (isset($_SESSION['user_id'])) : ?>
+                <a href="../team.php" class="tournament-cta-btn">Créer ou rejoindre une équipe</a>
+            <?php else : ?>
+                <a href="../login.php" class="tournament-cta-btn">Se connecter pour s'inscrire</a>
+            <?php endif; ?>
+
         </div>
     </section>
 

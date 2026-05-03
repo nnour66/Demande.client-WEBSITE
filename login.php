@@ -6,17 +6,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     header('Content-Type: application/json; charset=utf-8');
     header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
 
-    $email    = trim($_POST['email'] ?? '');
-    $password = $_POST['password'] ?? '';
+    $identifier = trim($_POST['identifier'] ?? '');
+    $password   = $_POST['password'] ?? '';
 
-    if (empty($email) || empty($password)) {
+    if (empty($identifier) || empty($password)) {
         echo json_encode(['status' => 'error', 'message' => 'Veuillez remplir tous les champs.']);
         exit();
     }
 
-    $stmt = $pdo->prepare("SELECT * FROM users WHERE email = :email");
-    $stmt->execute([':email' => $email]);
-
+    // Cherche par email OU par username
+    $stmt = $pdo->prepare("SELECT * FROM users WHERE email = :identifier OR username = :identifier");
+    $stmt->execute([':identifier' => $identifier]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($user && password_verify($password, $user['password'])) {
@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         echo json_encode(['status' => 'success', 'message' => 'Connexion réussie.', 'redirect' => 'index.php']);
     } else {
-        echo json_encode(['status' => 'error', 'message' => 'Email ou mot de passe incorrect.']);
+        echo json_encode(['status' => 'error', 'message' => 'Identifiant ou mot de passe incorrect.']);
     }
 
     exit();
@@ -47,8 +47,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div id="loginMessageContainer"></div>
 
             <p class="login-field">
-                <label for="email">Adresse email</label>
-                <input type="email" id="email" name="email" required>
+                <label for="identifier">Email ou nom d'utilisateur</label>
+                <input type="text" id="identifier" name="identifier" required>
             </p>
 
             <p class="login-field">

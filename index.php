@@ -74,55 +74,59 @@ include 'includes/header.php';
                 }
             ?>
                 <li class="games-item">
-                    <article class="game-card">
+                    <!-- ON ENGLOBE LA CARTE ICI -->
+                    <a href="<?= htmlspecialchars($game_link) ?>" class="tournament-card-link">
+                        <article class="game-card">
 
-                        <figure class="game-media">
-                            <img
-                                src="<?= htmlspecialchars($tournament['image']) ?>"
-                                alt="<?= htmlspecialchars($tournament['title']) ?>"
-                                class="game-image"
-                            >
-                        </figure>
+                            <figure class="game-media">
+                                <img
+                                    src="<?= htmlspecialchars($tournament['image']) ?>"
+                                    alt="<?= htmlspecialchars($tournament['title']) ?>"
+                                    class="game-image"
+                                >
+                            </figure>
 
-                        <span class="game-date-badge" aria-label="Date du tournoi">
-                            <?= htmlspecialchars($tournament['date']) ?>
-                        </span>
+                            <span class="game-date-badge" aria-label="Date du tournoi">
+                                <?= htmlspecialchars($tournament['date']) ?>
+                            </span>
 
-                        <header class="game-card-header">
-                            <p class="game-category" data-i18n="gameCategory">Tournoi</p>
+                            <header class="game-card-header">
+                                <p class="game-category" data-i18n="gameCategory">Tournoi</p>
 
-                            <?php if ($title_i18n !== ''): ?>
-                                <h3 class="game-title" data-i18n="<?= htmlspecialchars($title_i18n) ?>">
-                                    <?= htmlspecialchars($tournament['title']) ?>
-                                </h3>
-                            <?php else: ?>
-                                <h3 class="game-title">
-                                    <?= htmlspecialchars($tournament['title']) ?>
-                                </h3>
-                            <?php endif; ?>
-                        </header>
+                                <?php if ($title_i18n !== ''): ?>
+                                    <h3 class="game-title" data-i18n="<?= htmlspecialchars($title_i18n) ?>">
+                                        <?= htmlspecialchars($tournament['title']) ?>
+                                    </h3>
+                                <?php else: ?>
+                                    <h3 class="game-title">
+                                        <?= htmlspecialchars($tournament['title']) ?>
+                                    </h3>
+                                <?php endif; ?>
+                            </header>
 
-                        <p class="game-description">
-                            <span class="game-places-number"><?= $places_total ?></span>
-                            <span data-i18n="gameSlots">places disponibles</span>
-                        </p>
+                            <p class="game-description">
+                                <span class="game-places-number"><?= $places_total ?></span>
+                                <span data-i18n="gameSlots">places disponibles</span>
+                            </p>
 
-                        <div class="game-card-sep"></div>
+                            <div class="game-card-sep"></div>
 
-                        <div class="game-card-footer">
-                            <a href="<?= htmlspecialchars($game_link) ?>" class="game-link" data-i18n="gameLink">
-                                Voir le tournoi
-                            </a>
+                            <div class="game-card-footer">
+                                <!-- ANCIEN BOUTON <a> TRANSFORMÉ EN <span> -->
+                                <span class="game-link" data-i18n="gameLink">
+                                    Voir le tournoi
+                                </span>
 
-                            <div class="game-progress" aria-label="Places restantes">
-                                <div class="game-progress-bar">
-                                    <div class="game-progress-fill <?= htmlspecialchars($bar_class) ?>" style="width: <?= $pct ?>%"></div>
+                                <div class="game-progress" aria-label="Places restantes">
+                                    <div class="game-progress-bar">
+                                        <div class="game-progress-fill <?= htmlspecialchars($bar_class) ?>" style="width: <?= $pct ?>%"></div>
+                                    </div>
+                                    <span class="game-progress-txt"><?= $places_total ?> pl.</span>
                                 </div>
-                                <span class="game-progress-txt"><?= $places_total ?> pl.</span>
                             </div>
-                        </div>
 
-                    </article>
+                        </article>
+                    </a>
                 </li>
             <?php endforeach; ?>
         </ul>
