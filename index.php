@@ -21,8 +21,7 @@ include 'includes/header.php';
                 <span data-i18n="introTitle">Les Jeux</span>
             </h2>
             <p class="intro-text" data-i18n="introText">
-                Découvre les jeux disponibles sur GameArena, accède aux espaces de tournoi,
-                consulte les formats de compétition et prépare-toi à entrer dans l'arène.
+                Prêt à prouver que tu es le boss du campus ? NnourArena rassemble les meilleurs jeux du moment pour des affrontements mémorables entre potes ou en solo. Du tryhard intense en équipe sur Rocket League et LoL, jusqu'aux fous rires (et crises de nerfs) sur Mario Kart et Smash Bros, il y en a pour tous les profils. Consulte les formats, vérifie les places restantes et sécurise ton inscription avant qu'il ne soit trop tard. Que le meilleur gagne !
             </p>
         </div>
     </section>
