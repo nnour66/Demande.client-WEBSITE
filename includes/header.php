@@ -66,7 +66,7 @@ if (session_status() === PHP_SESSION_NONE) {
                     </li>
                 <?php else : ?>
     <li class="nav-item">
-        <a href="login.php" class="login-btn" aria-label="Se connecter">
+        <a href="/login.php" class="login-btn" aria-label="Se connecter">
             <span class="profile-icon" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <circle cx="12" cy="8" r="4"></circle>
