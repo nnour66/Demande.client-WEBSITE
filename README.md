@@ -153,13 +153,12 @@ Chaque fichier représente une page spécifique avec les informations ou interac
 ## 🚀 Lancement du projet
 
 1. Cloner le projet
-2. Lancer un serveur local (ex : XAMPP, WAMP, MAMP)
-3. Initialiser la base de données avec :
+2. Initialiser la base de données avec :
 
    ```
    database/init_db.php
    ```
-4. Accéder au projet via :
+3. Accéder au projet via :
 
    ```
    http://localhost/
@@ -181,5 +180,22 @@ Chaque fichier représente une page spécifique avec les informations ou interac
 Projet réalisé dans le cadre d’un apprentissage du développement web.
 
 ---
+
+🧑‍💻 Conclusion
+
+Ce projet pose une excellente base pour une application web complète :
+
+* structure propre
+* logique claire
+* potentiel d’évolution énorme
+
+👉 Il peut servir de tremplin vers :
+
+* un projet pro
+* un portfolio
+* ou une vraie plateforme gaming
+
+---
+
 
 💡 *N’hésite pas à améliorer ce projet et à ajouter tes propres fonctionnalités !*
