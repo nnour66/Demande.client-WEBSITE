@@ -8,10 +8,9 @@ if (session_status() === PHP_SESSION_NONE) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GameArena</title>
+    <title>NnourArena</title>
     <link rel="stylesheet" href="/assets/css/style.css">
     <script src="/assets/js/theme.js" defer></script>
-    <script src="/assets/js/lang.js" defer></script>
     <script src="/assets/js/form-message.js" defer></script>
     <script src="/assets/js/profile-menu.js" defer></script>
 </head>
@@ -28,13 +27,6 @@ if (session_status() === PHP_SESSION_NONE) {
             </a>
 
             <ul class="nav-actions">
-                <li class="nav-item">
-                    <button class="lang-btn" id="langToggle" type="button">
-                        <img src="/assets/img/fr.svg" id="langFlag" class="lang-flag" alt="flag">
-                        <span class="lang-label" id="langLabel">FR</span>
-                    </button>
-                </li>
-
                 <?php if (isset($_SESSION['username'])) : ?>
                     <li class="nav-item profile-menu-item">
                         <button class="profile-trigger" id="profileToggle" type="button" aria-expanded="false">
@@ -113,6 +105,6 @@ if (session_status() === PHP_SESSION_NONE) {
 
         <section class="hero-banner" aria-label="Présentation du site">
             <p class="hero-kicker" data-i18n="heroKicker">Tournois gaming • compétitions • e-sport</p>
-            <h1 class="hero-title">GameArena</h1>
+            <h1 class="hero-title">NnourArena</h1>
         </section>
     </header>

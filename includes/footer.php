@@ -16,7 +16,7 @@
                 <li>
                     <a href="mailto:contact@gamearena.fr">contact@gamearena.fr</a>
                 </li>
-                <li data-i18n="footerProject">Université — Projet e-sport</li>
+                <li data-i18n="footerProject">Unistra — Projet e-sport</li>
             </ul>
         </nav>
 
