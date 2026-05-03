@@ -167,8 +167,7 @@ if (str_starts_with($success_msg, 'success_create|')) {
             <p class="login-field">
                 <label for="tournament_id">Choisir le tournoi</label>
                 <select id="tournament_id" name="tournament_id" required>
-                    <option value="">Sélectionne un tournoi...</option>
-                    <?php foreach ($teamTournaments as $t) : ?>
+                        <option value="" disabled selected hidden>Sélectionne un tournoi...</option>                    <?php foreach ($teamTournaments as $t) : ?>
                         <option value="<?= $t['id'] ?>"><?= htmlspecialchars($t['title']) ?></option>
                     <?php endforeach; ?>
                 </select>

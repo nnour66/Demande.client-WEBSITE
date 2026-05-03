@@ -65,7 +65,10 @@ if (session_status() === PHP_SESSION_NONE) {
                             <div class="profile-dropdown-links">
                                 <a href="/profil.php">Mon profil</a>
                                 <a href="/edit-profil.php">Modifier mes informations</a>
-                                <a href="logout.php" class="danger-link">Déconnexion</a>
+                                <?php if ($_SESSION['username'] === 'admin') : ?>
+                                    <a href="/admin.php">Panel Admin</a>
+                                <?php endif; ?>
+                                <a href="/logout.php" class="danger-link">Déconnexion</a>
                             </div>
                         </div>
                     </li>
